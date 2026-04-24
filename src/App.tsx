@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram, Video, BarChart, TrendingUp, Zap } from "lucide-react";
+import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram, Video, BarChart, TrendingUp, Zap, Menu, X } from "lucide-react";
 import { AnimatedCounter } from "./components/AnimatedCounter";
 
 const ANIMATION_VARIANTS = {
@@ -27,6 +27,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +44,7 @@ export default function App() {
   return (
     <div className="bg-[#050505] text-white min-h-screen selection:bg-brand-primary/30 font-sans relative">
       {/* Top Navigation Bar */}
-      <nav className="h-20 md:h-24 px-6 md:px-12 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-md relative z-20">
+      <nav className="h-20 md:h-24 px-6 md:px-12 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-md relative z-50">
         <div className="flex items-center gap-3">
           <img src="https://raw.githubusercontent.com/jagrutipixels/KMW-META-AD-PORTFOLIO/58e8299f75b44b4d743cb88c3d735df5bbd32494/KMW-White-01.png" alt="Karn Marketing Warfare Logo" className="h-16 md:h-20 w-auto" style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' }} />
         </div>
@@ -54,8 +55,37 @@ export default function App() {
           <a href="#process" className="hover:opacity-100 transition-opacity">Our Process</a>
           <a href="#proven-ads" className="hover:opacity-100 transition-opacity text-brand-primary">Proven Ads</a>
         </div>
-        <button className="px-4 py-2 bg-brand-primary text-black text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Book Call</button>
+        
+        <div className="flex items-center gap-4">
+          <button className="hidden md:block px-4 py-2 bg-brand-primary text-black text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Book Call</button>
+          
+          <button 
+            className="md:hidden p-2 text-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 top-20 z-40 bg-[#050505] flex flex-col items-center pt-10 space-y-8 text-lg font-bold tracking-widest uppercase md:hidden"
+          >
+            <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+            <a href="#case-studies" onClick={() => setIsMobileMenuOpen(false)}>Case Studies</a>
+            <a href="#boosting" onClick={() => setIsMobileMenuOpen(false)}>Video Boosting</a>
+            <a href="#process" onClick={() => setIsMobileMenuOpen(false)}>Our Process</a>
+            <a href="#proven-ads" className="text-brand-primary" onClick={() => setIsMobileMenuOpen(false)}>Proven Ads</a>
+            <button className="px-8 py-4 mt-8 bg-brand-primary text-black font-bold outline-none transition-opacity">Book Call</button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Background ambient glow */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -672,7 +702,7 @@ function InstagramVideoCard({ url, label, color = "brand-primary" }: { url: stri
   return (
     <div 
       ref={setRef}
-      className={`flex flex-col bg-black border border-white/10 ${theme.border} w-full transition-all rounded-xl overflow-hidden`}
+      className={`flex flex-col bg-black border border-white/10 ${theme.border} w-full max-w-[400px] mx-auto transition-all rounded-xl overflow-hidden`}
     >
       <div className="flex items-center justify-between p-3 border-b border-white/5 bg-black/80 backdrop-blur z-10 transition-colors">
         <div className="flex items-center space-x-2 text-[11px] font-bold text-gray-200 uppercase tracking-widest">
