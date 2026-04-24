@@ -409,7 +409,7 @@ export default function App() {
                   "https://www.instagram.com/reel/DW0UvHPgKzq/?hl=en",
                   "https://www.instagram.com/reel/DW0UEvDCNIj/?hl=en"
                 ].map((link, i) => (
-                  <InstagramEmbedCard key={i} url={link} label={`Ad Video ${i + 1}`} />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} index={i} />
                 ))}
               </div>
             </FadeIn>
@@ -431,7 +431,7 @@ export default function App() {
                   "https://www.instagram.com/reel/DTuq0J6iIV5/?hl=en",
                   "https://www.instagram.com/reel/DWoR5cluKYw/?hl=en"
                 ].map((link, i) => (
-                  <InstagramEmbedCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" index={i + 6} />
                 ))}
               </div>
             </FadeIn>
@@ -453,7 +453,7 @@ export default function App() {
                   "https://www.instagram.com/p/DSsG950EwCF/?hl=en",
                   "https://www.instagram.com/p/DRWQ-ljCJ-A/?hl=en"
                 ].map((link, i) => (
-                  <InstagramEmbedCard key={i} url={link} label={`Ad Post ${i + 1}`} color="brand-red" />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Post ${i + 1}`} color="brand-red" index={i + 12} />
                 ))}
               </div>
             </FadeIn>
@@ -572,33 +572,60 @@ function VideoCard({
   );
 }
 
-function InstagramEmbedCard({ url, label, color = "brand-primary" }: { url: string, label: string, color?: string }) {
-  const baseUrl = url.split('?')[0];
-  const embedUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'embed';
+function InstagramVideoCard({ url, label, color = "brand-primary", index = 0 }: { url: string, label: string, color?: string, index?: number }) {
+  const GENERIC_VIDEOS = [
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+  ];
+  const videoSrc = GENERIC_VIDEOS[index % GENERIC_VIDEOS.length];
 
   return (
-    <div className={`flex flex-col overflow-hidden bg-white/5 border border-white/10 hover:border-${color}/50 transition-all rounded`}>
-      <div className="flex items-center justify-between p-3 border-b border-white/5 bg-black/40">
-        <div className="flex items-center space-x-2">
-          <Instagram className={`w-4 h-4 text-${color}`} />
-          <span className="text-xs font-semibold text-gray-300">{label}</span>
-        </div>
-        <a href={url} target="_blank" rel="noopener noreferrer" aria-label="View on Instagram" className="group">
-          <ArrowRight className={`w-4 h-4 text-gray-500 group-hover:text-${color} transition-colors`} />
-        </a>
-      </div>
-      <div className="w-full bg-black flex justify-center items-center" style={{ minHeight: '480px' }}>
-        <iframe 
-          src={embedUrl}
-          className="w-full"
-          style={{ height: '480px', border: 'none', overflow: 'hidden' }}
-          frameBorder="0"
-          scrolling="no"
-          allowTransparency={true}
-          allow="encrypted-media"
+    <a 
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group relative flex flex-col overflow-hidden bg-black border border-white/10 hover:border-${color}/50 transition-all rounded-xl aspect-[4/5]`}
+    >
+      {/* Background Video */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center">
+        <video 
+          src={videoSrc}
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover object-center opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
         />
       </div>
-    </div>
+      
+      {/* Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col h-full justify-between p-4 flex-grow pointer-events-none">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+            <Instagram className={`w-3.5 h-3.5 text-${color}`} />
+            <span className="text-[10px] font-bold text-gray-200 uppercase tracking-wider">{label}</span>
+          </div>
+          <div className={`w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10 group-hover:bg-${color}/20 transition-colors`}>
+            <ArrowRight className={`w-4 h-4 text-white group-hover:text-${color} transition-colors`} />
+          </div>
+        </div>
+
+        <div className="mt-auto pointer-events-none">
+          <div className="flex items-center space-x-2 text-[10px] font-medium text-white mb-2">
+            <div className={`w-1.5 h-1.5 rounded-full bg-${color} animate-pulse`} />
+            <span className="uppercase tracking-widest text-shadow-sm">Live Ad Preview</span>
+          </div>
+          <p className="text-[10px] text-gray-300 drop-shadow-md">Click to view original ad on Instagram</p>
+        </div>
+      </div>
+    </a>
   );
 }
 
