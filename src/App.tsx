@@ -13,7 +13,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "-20px" }}
       variants={{
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: "easeOut" } },
@@ -99,12 +99,12 @@ export default function App() {
         {/* SECTION 1: HERO */}
         <section className="min-h-[90vh] flex flex-col justify-center items-center text-center pt-20 pb-32">
           {/* Floating Performance Metrics in Background */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.4, y: [20, -10, 20] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] left-[10%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-brand-primary"
+              className="absolute top-[10%] left-[5%] md:top-[20%] md:left-[10%] px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 backdrop-blur-md text-[10px] md:text-xs font-mono text-brand-primary"
             >
               ₹0.91 CPC
             </motion.div>
@@ -112,7 +112,7 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.3, y: [10, -20, 10] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-[35%] right-[15%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-brand-teal"
+              className="absolute top-[25%] right-[5%] md:top-[35%] md:right-[15%] px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 backdrop-blur-md text-[10px] md:text-xs font-mono text-brand-teal"
             >
               6.68% CTR
             </motion.div>
@@ -120,7 +120,7 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.35, y: [15, -15, 15] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-[25%] left-[20%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-zinc-300"
+              className="absolute bottom-[20%] left-[10%] md:bottom-[25%] md:left-[20%] px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 backdrop-blur-md text-[10px] md:text-xs font-mono text-zinc-300"
             >
               27K+ Views
             </motion.div>
@@ -139,7 +139,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[1.1]"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[1.1]"
           >
             Turning Attention Into <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-red">Measurable Growth</span>
@@ -563,7 +563,7 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 p-3 bg-brand-primary text-black rounded-full shadow-lg hover:opacity-90 transition-opacity"
+            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 p-3 bg-brand-primary text-black rounded-full shadow-lg hover:opacity-90 transition-opacity"
             aria-label="Scroll to top"
           >
             <ArrowUp className="w-6 h-6" />
@@ -657,7 +657,7 @@ declare global {
   }
 }
 
-function InstagramVideoCard({ url, label, color = "brand-primary" }: { url: string, label: string, color?: string }) {
+const InstagramVideoCard: React.FC<{ url: string, label: string, color?: string }> = ({ url, label, color = "brand-primary" }) => {
   const [inView, setInView] = useState(false);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
