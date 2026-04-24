@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram } from "lucide-react";
+import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram, Video, BarChart, TrendingUp, Zap } from "lucide-react";
 import { AnimatedCounter } from "./components/AnimatedCounter";
 
 const ANIMATION_VARIANTS = {
@@ -144,29 +144,83 @@ export default function App() {
           </motion.a>
         </section>
 
-        {/* SECTION 2: ABOUT / EXPLANATION */}
-        <section id="about" className="py-24 border-t border-white/5">
-          <FadeIn className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.2] tracking-tight">
-              We turn attention into <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-red">paying customers.</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto mt-12 pl-4 md:pl-0 border-l border-brand-primary/30">
-              <div className="pl-6 relative">
-                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-brand-primary" />
-                <h3 className="text-lg font-bold text-white mb-2">What we do</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  We don't just "run ads" or blindly boost posts. We build a complete marketing engine for your business on Meta (Instagram & Facebook). Our goal is to get you the most clicks, views, and sales for the lowest possible cost.
-                </p>
+        {/* SECTION 2: ABOUT / EXPLANATION / THE METHODOLOGY */}
+        <section id="about" className="py-32 relative border-t border-white/5 overflow-hidden">
+          {/* Subtle background glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-primary/5 blur-[120px] rounded-full pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-4 relative z-10">
+            <FadeIn className="text-center space-y-6 mb-20 max-w-3xl mx-auto">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-brand-primary mb-4">
+                <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
+                <span>Our Methodology</span>
               </div>
-              <div className="pl-6 relative">
-                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-brand-red" />
-                <h3 className="text-lg font-bold text-white mb-2">How we do it</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  We combine eye-catching videos with precise audience targeting. We test different variations to see what works best, then pour budget into the winners to scale your business predictably.
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-white mb-6">
+                We turn attention into <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-brand-orange to-brand-red inline-block pb-2">paying customers.</span>
+              </h2>
+              <p className="text-gray-400 text-lg sm:text-xl leading-relaxed">
+                We don't just "run ads". We build a complete performance marketing engine engineered for scale and predictability.
+              </p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Card 1 */}
+              <FadeIn delay={0.1} className="p-8 bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-brand-primary/40 transition-all hover:-translate-y-1 group">
+                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center mb-6 group-hover:bg-brand-primary/20 transition-colors">
+                  <Target className="w-6 h-6 text-brand-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Hyper-Targeting</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  We use advanced Meta pixel data and custom audiences to put your offer in front of people who are actually ready to buy.
                 </p>
-              </div>
+              </FadeIn>
+
+              {/* Card 2 */}
+              <FadeIn delay={0.2} className="p-8 bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-brand-orange/40 transition-all hover:-translate-y-1 group">
+                <div className="w-12 h-12 rounded-full bg-brand-orange/10 flex items-center justify-center mb-6 group-hover:bg-brand-orange/20 transition-colors">
+                  <Video className="w-6 h-6 text-brand-orange" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Creative Engineering</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Eye-catching, direct-response video creatives designed specifically for feed and reels algorithms to hook attention instantly.
+                </p>
+              </FadeIn>
+
+              {/* Card 3 */}
+              <FadeIn delay={0.3} className="p-8 bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-brand-red/40 transition-all hover:-translate-y-1 group">
+                <div className="w-12 h-12 rounded-full bg-brand-red/10 flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+                  <BarChart className="w-6 h-6 text-brand-red" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Rapid Testing</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  We launch dozens of ad variations simultaneously, letting data dictate the winners rather than relying on guesswork.
+                </p>
+              </FadeIn>
+
+              {/* Card 4 */}
+              <FadeIn delay={0.4} className="p-8 bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-brand-primary/40 transition-all hover:-translate-y-1 group">
+                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center mb-6 group-hover:bg-brand-primary/20 transition-colors">
+                  <TrendingUp className="w-6 h-6 text-brand-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Ruthless Scaling</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Once we identify the lowest CPA (Cost Per Acquisition) ads, we pour budget into them to exponentially scale your revenue.
+                </p>
+              </FadeIn>
             </div>
-          </FadeIn>
+            
+            <FadeIn delay={0.5} className="mt-16 flex flex-col items-center">
+               <div className="p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl flex flex-col md:flex-row items-center gap-6 md:gap-8 max-w-4xl w-full hover:bg-white/10 transition-colors">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-brand-primary to-brand-red flex shrink-0 items-center justify-center shadow-[0_0_30px_rgba(255,140,0,0.3)]">
+                    <Zap className="w-8 h-8 text-white fill-white" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h4 className="text-xl md:text-2xl font-bold text-white mb-2">The Result: Unfair Advantage</h4>
+                    <p className="text-sm md:text-base text-gray-400">Our custom marketing engine consistently delivers views, clicks, and paying customers at the lowest possible cost in your industry.</p>
+                  </div>
+               </div>
+            </FadeIn>
+          </div>
         </section>
 
         {/* SECTION 3: CASE STUDY – SAVOIR STUDIO */}
@@ -400,9 +454,8 @@ export default function App() {
                 </div>
                 <h3 className="text-xl font-bold">BNI</h3>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {[
-                  "https://www.instagram.com/reel/DW1Nmz1jvTV/?hl=en",
                   "https://www.instagram.com/reel/DW0XwczjZYr/?hl=en",
                   "https://www.instagram.com/reel/DW0XN86jUbA/?hl=en",
                   "https://www.instagram.com/reel/DW0VWcICV0R/?hl=en"
@@ -420,11 +473,10 @@ export default function App() {
                 </div>
                 <h3 className="text-xl font-bold">Savoir Studio</h3>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {[
                   "https://www.instagram.com/reel/DWjJ6sPCGND/?hl=en",
                   "https://www.instagram.com/reel/DVs9fzIk2YP/?hl=en",
-                  "https://www.instagram.com/reel/DUGG14YiFlL/?hl=en",
                   "https://www.instagram.com/reel/DT2o0x2k7Kh/?hl=en"
                 ].map((link, i) => (
                   <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" />
@@ -440,9 +492,8 @@ export default function App() {
                 </div>
                 <h3 className="text-xl font-bold">Luxe Brow Clinic</h3>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {[
-                  "https://www.instagram.com/p/DO05ib3k4wq/?hl=en",
                   "https://www.instagram.com/p/DPNzdsXj8aH/?hl=en",
                   "https://www.instagram.com/p/DP-c1_HCDJv/?hl=en",
                   "https://www.instagram.com/p/DPERB_ViOwc/?hl=en"
@@ -580,6 +631,26 @@ function InstagramVideoCard({ url, label, color = "brand-primary" }: { url: stri
   const [inView, setInView] = useState(false);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
+  const colorStyles: Record<string, { border: string, text: string, groupHover: string }> = {
+    'brand-primary': {
+      border: 'hover:border-brand-primary/50',
+      text: 'text-brand-primary',
+      groupHover: 'group-hover:text-brand-primary'
+    },
+    'brand-teal': {
+      border: 'hover:border-brand-teal/50',
+      text: 'text-brand-teal',
+      groupHover: 'group-hover:text-brand-teal'
+    },
+    'brand-red': {
+      border: 'hover:border-brand-red/50',
+      text: 'text-brand-red',
+      groupHover: 'group-hover:text-brand-red'
+    }
+  };
+
+  const theme = colorStyles[color] || colorStyles['brand-primary'];
+
   useEffect(() => {
     if (!ref) return;
     const observer = new IntersectionObserver(([entry]) => {
@@ -601,15 +672,15 @@ function InstagramVideoCard({ url, label, color = "brand-primary" }: { url: stri
   return (
     <div 
       ref={setRef}
-      className={`flex flex-col bg-black border border-white/10 hover:border-${color}/50 w-full transition-all rounded-xl overflow-hidden`}
+      className={`flex flex-col bg-black border border-white/10 ${theme.border} w-full transition-all rounded-xl overflow-hidden`}
     >
       <div className="flex items-center justify-between p-3 border-b border-white/5 bg-black/80 backdrop-blur z-10 transition-colors">
         <div className="flex items-center space-x-2 text-[11px] font-bold text-gray-200 uppercase tracking-widest">
-          <Instagram className={`w-4 h-4 text-${color}`} />
+          <Instagram className={`w-4 h-4 ${theme.text}`} />
           <span>{label}</span>
         </div>
         <a href={url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-center p-1">
-          <ArrowRight className={`w-4 h-4 text-gray-500 group-hover:text-${color} transition-colors`} />
+          <ArrowRight className={`w-4 h-4 text-gray-500 ${theme.groupHover} transition-colors`} />
         </a>
       </div>
       
