@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram } from "lucide-react";
 import { AnimatedCounter } from "./components/AnimatedCounter";
@@ -400,60 +400,54 @@ export default function App() {
                 </div>
                 <h3 className="text-xl font-bold">BNI</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                   "https://www.instagram.com/reel/DW1Nmz1jvTV/?hl=en",
                   "https://www.instagram.com/reel/DW0XwczjZYr/?hl=en",
                   "https://www.instagram.com/reel/DW0XN86jUbA/?hl=en",
-                  "https://www.instagram.com/reel/DW0VWcICV0R/?hl=en",
-                  "https://www.instagram.com/reel/DW0UvHPgKzq/?hl=en",
-                  "https://www.instagram.com/reel/DW0UEvDCNIj/?hl=en"
+                  "https://www.instagram.com/reel/DW0VWcICV0R/?hl=en"
                 ].map((link, i) => (
-                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} index={i} />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} />
                 ))}
               </div>
             </FadeIn>
 
             {/* Group 2: Savoir Studio */}
             <FadeIn delay={0.2}>
-              <div className="flex items-center space-x-3 mb-6">
+              <div className="flex items-center space-x-3 mb-6 mt-12">
                 <div className="w-10 h-10 rounded-full bg-brand-teal/20 flex items-center justify-center border border-brand-teal/50">
                   <Instagram className="w-5 h-5 text-brand-teal" />
                 </div>
                 <h3 className="text-xl font-bold">Savoir Studio</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                   "https://www.instagram.com/reel/DWjJ6sPCGND/?hl=en",
                   "https://www.instagram.com/reel/DVs9fzIk2YP/?hl=en",
                   "https://www.instagram.com/reel/DUGG14YiFlL/?hl=en",
-                  "https://www.instagram.com/reel/DT2o0x2k7Kh/?hl=en",
-                  "https://www.instagram.com/reel/DTuq0J6iIV5/?hl=en",
-                  "https://www.instagram.com/reel/DWoR5cluKYw/?hl=en"
+                  "https://www.instagram.com/reel/DT2o0x2k7Kh/?hl=en"
                 ].map((link, i) => (
-                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" index={i + 6} />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" />
                 ))}
               </div>
             </FadeIn>
 
             {/* Group 3: Luxe Brow Clinic */}
             <FadeIn delay={0.3}>
-              <div className="flex items-center space-x-3 mb-6">
+              <div className="flex items-center space-x-3 mb-6 mt-12">
                 <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center border border-brand-red/50">
                   <Instagram className="w-5 h-5 text-brand-red" />
                 </div>
                 <h3 className="text-xl font-bold">Luxe Brow Clinic</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                   "https://www.instagram.com/p/DO05ib3k4wq/?hl=en",
                   "https://www.instagram.com/p/DPNzdsXj8aH/?hl=en",
                   "https://www.instagram.com/p/DP-c1_HCDJv/?hl=en",
-                  "https://www.instagram.com/p/DPERB_ViOwc/?hl=en",
-                  "https://www.instagram.com/p/DSsG950EwCF/?hl=en",
-                  "https://www.instagram.com/p/DRWQ-ljCJ-A/?hl=en"
+                  "https://www.instagram.com/p/DPERB_ViOwc/?hl=en"
                 ].map((link, i) => (
-                  <InstagramVideoCard key={i} url={link} label={`Ad Post ${i + 1}`} color="brand-red" index={i + 12} />
+                  <InstagramVideoCard key={i} url={link} label={`Ad Post ${i + 1}`} color="brand-red" />
                 ))}
               </div>
             </FadeIn>
@@ -572,60 +566,70 @@ function VideoCard({
   );
 }
 
-function InstagramVideoCard({ url, label, color = "brand-primary", index = 0 }: { url: string, label: string, color?: string, index?: number }) {
-  const GENERIC_VIDEOS = [
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-    "https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
-  ];
-  const videoSrc = GENERIC_VIDEOS[index % GENERIC_VIDEOS.length];
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds: {
+        process: () => void;
+      };
+    };
+  }
+}
 
+function InstagramVideoCard({ url, label, color = "brand-primary" }: { url: string, label: string, color?: string }) {
+  const [inView, setInView] = useState(false);
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!ref) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '300px' });
+    observer.observe(ref);
+    return () => observer.disconnect();
+  }, [ref]);
+
+  const baseUrl = url.split('?')[0].replace(/\/$/, '');
+  
+  // Use pure embed path without captioned to keep it sleek, add autoplay and muted
+  const embedUrl = `${baseUrl}/embed/?autoplay=1&mute=1`;
+
+  // Use a padding-bottom trick for aspect ratio 9:16 (16/9 = 177.77%)
   return (
-    <a 
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group relative flex flex-col overflow-hidden bg-black border border-white/10 hover:border-${color}/50 transition-all rounded-xl aspect-[4/5]`}
+    <div 
+      ref={setRef}
+      className={`flex flex-col bg-black border border-white/10 hover:border-${color}/50 w-full transition-all rounded-xl overflow-hidden`}
     >
-      {/* Background Video */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center">
-        <video 
-          src={videoSrc}
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="w-full h-full object-cover object-center opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
-        />
+      <div className="flex items-center justify-between p-3 border-b border-white/5 bg-black/80 backdrop-blur z-10 transition-colors">
+        <div className="flex items-center space-x-2 text-[11px] font-bold text-gray-200 uppercase tracking-widest">
+          <Instagram className={`w-4 h-4 text-${color}`} />
+          <span>{label}</span>
+        </div>
+        <a href={url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-center p-1">
+          <ArrowRight className={`w-4 h-4 text-gray-500 group-hover:text-${color} transition-colors`} />
+        </a>
       </div>
       
-      {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col h-full justify-between p-4 flex-grow pointer-events-none">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-            <Instagram className={`w-3.5 h-3.5 text-${color}`} />
-            <span className="text-[10px] font-bold text-gray-200 uppercase tracking-wider">{label}</span>
+      <div className="w-full relative bg-zinc-950 overflow-hidden" style={{ paddingBottom: '120%' }}>
+        {inView ? (
+          <iframe 
+            src={embedUrl}
+            className="absolute top-0 left-0 w-full h-full border-0"
+            scrolling="no"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            title={label}
+          />
+        ) : (
+          <div className="absolute top-0 left-0 w-full h-full animate-pulse flex flex-col items-center justify-center bg-white/5 space-y-4">
+            <Instagram className="w-8 h-8 text-white/20" />
+            <span className="text-xs text-white/20 font-medium uppercase tracking-widest">Loading Post...</span>
           </div>
-          <div className={`w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10 group-hover:bg-${color}/20 transition-colors`}>
-            <ArrowRight className={`w-4 h-4 text-white group-hover:text-${color} transition-colors`} />
-          </div>
-        </div>
-
-        <div className="mt-auto pointer-events-none">
-          <div className="flex items-center space-x-2 text-[10px] font-medium text-white mb-2">
-            <div className={`w-1.5 h-1.5 rounded-full bg-${color} animate-pulse`} />
-            <span className="uppercase tracking-widest text-shadow-sm">Live Ad Preview</span>
-          </div>
-          <p className="text-[10px] text-gray-300 drop-shadow-md">Click to view original ad on Instagram</p>
-        </div>
+        )}
       </div>
-    </a>
+    </div>
   );
 }
 
