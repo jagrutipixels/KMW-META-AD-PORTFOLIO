@@ -1,6 +1,6 @@
-import React from "react";
-import { motion } from "motion/react";
-import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Target, Clapperboard, Rocket, ChevronRight, ArrowRight, ArrowUp, Instagram } from "lucide-react";
 import { AnimatedCounter } from "./components/AnimatedCounter";
 
 const ANIMATION_VARIANTS = {
@@ -26,26 +26,41 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 }
 
 export default function App() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="bg-[#050505] text-white min-h-screen selection:bg-blue-500/30 font-sans relative">
+    <div className="bg-[#050505] text-white min-h-screen selection:bg-brand-primary/30 font-sans relative">
       {/* Top Navigation Bar */}
-      <nav className="h-16 px-6 md:px-12 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-md relative z-20">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-black text-xs tracking-tighter">KARN</div>
-          <span className="font-bold tracking-widest text-[10px] uppercase opacity-60 hidden sm:inline">Marketing Warfare</span>
+      <nav className="h-20 md:h-24 px-6 md:px-12 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-md relative z-20">
+        <div className="flex items-center gap-3">
+          <img src="https://raw.githubusercontent.com/jagrutipixels/KMW-META-AD-PORTFOLIO/58e8299f75b44b4d743cb88c3d735df5bbd32494/KMW-White-01.png" alt="Karn Marketing Warfare Logo" className="h-16 md:h-20 w-auto" style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' }} />
         </div>
         <div className="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-semibold opacity-70">
-          <a href="#" className="hover:opacity-100 transition-opacity">Intelligence</a>
-          <a href="#" className="hover:opacity-100 transition-opacity text-blue-400">Operations</a>
-          <a href="#" className="hover:opacity-100 transition-opacity">Deployment</a>
+          <a href="#about" className="hover:opacity-100 transition-opacity">About</a>
+          <a href="#case-studies" className="hover:opacity-100 transition-opacity">Case Studies</a>
+          <a href="#boosting" className="hover:opacity-100 transition-opacity">Video Boosting</a>
+          <a href="#process" className="hover:opacity-100 transition-opacity">Our Process</a>
+          <a href="#proven-ads" className="hover:opacity-100 transition-opacity text-brand-primary">Proven Ads</a>
         </div>
-        <button className="px-4 py-2 bg-white text-black text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Book Call</button>
+        <button className="px-4 py-2 bg-brand-primary text-black text-[11px] font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Book Call</button>
       </nav>
 
       {/* Background ambient glow */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full mix-blend-screen" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-red/10 blur-[120px] rounded-full mix-blend-screen" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-primary/10 blur-[120px] rounded-full mix-blend-screen" />
         <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
       </div>
 
@@ -59,7 +74,7 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.4, y: [20, -10, 20] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] left-[10%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-blue-300"
+              className="absolute top-[20%] left-[10%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-brand-primary"
             >
               ₹0.91 CPC
             </motion.div>
@@ -67,7 +82,7 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.3, y: [10, -20, 10] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-[35%] right-[15%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-emerald-300"
+              className="absolute top-[35%] right-[15%] px-4 py-2 rounded-full border border-white/10 backdrop-blur-md text-xs font-mono text-brand-teal"
             >
               6.68% CTR
             </motion.div>
@@ -85,7 +100,7 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center space-x-2 px-3 py-1 pb-1.5 rounded border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 mb-8"
+            className="inline-flex items-center space-x-2 px-3 py-1 pb-1.5 rounded border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-primary mb-8"
           >
             <span>Mission Statement</span>
           </motion.div>
@@ -97,7 +112,7 @@ export default function App() {
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[1.1]"
           >
             Turning Attention Into <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Measurable Growth</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-red">Measurable Growth</span>
           </motion.h1>
 
           <motion.p 
@@ -106,7 +121,7 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-sm text-gray-400 leading-relaxed max-w-2xl mb-4"
           >
-            Performance-driven Meta advertising systems powered by Karn.
+            We help you reach the right people on Facebook and Instagram using Meta Ads.
           </motion.p>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -114,7 +129,7 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-sm text-gray-500 leading-relaxed max-w-2xl mb-12"
           >
-            We build high-impact campaigns that combine content, targeting, and strategy to deliver scalable results.
+            By combining great videos, smart targeting, and clear strategies, we bring consistent growth to your business.
           </motion.p>
 
           <motion.a 
@@ -130,21 +145,21 @@ export default function App() {
         </section>
 
         {/* SECTION 2: ABOUT / EXPLANATION */}
-        <section className="py-24 border-t border-white/5">
+        <section id="about" className="py-24 border-t border-white/5">
           <FadeIn className="max-w-4xl mx-auto text-center space-y-8">
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.2] tracking-tight">
-              We turn attention into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">paying customers.</span>
+              We turn attention into <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-red">paying customers.</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto mt-12 pl-4 md:pl-0 border-l border-blue-500/30">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto mt-12 pl-4 md:pl-0 border-l border-brand-primary/30">
               <div className="pl-6 relative">
-                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-blue-500" />
+                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-brand-primary" />
                 <h3 className="text-lg font-bold text-white mb-2">What we do</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   We don't just "run ads" or blindly boost posts. We build a complete marketing engine for your business on Meta (Instagram & Facebook). Our goal is to get you the most clicks, views, and sales for the lowest possible cost.
                 </p>
               </div>
               <div className="pl-6 relative">
-                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-indigo-500" />
+                <div className="absolute left-[-5px] top-1.5 w-2 h-2 rounded-full bg-brand-red" />
                 <h3 className="text-lg font-bold text-white mb-2">How we do it</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   We combine eye-catching videos with precise audience targeting. We test different variations to see what works best, then pour budget into the winners to scale your business predictably.
@@ -157,11 +172,11 @@ export default function App() {
         {/* SECTION 3: CASE STUDY – SAVOIR STUDIO */}
         <section id="case-studies" className="py-24">
           <FadeIn className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 p-6 bg-white/5 border border-white/10 hover:border-blue-500/50 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="order-2 lg:order-1 p-6 bg-white/5 border border-white/10 hover:border-brand-primary/50 transition-colors group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="grid grid-cols-2 gap-4 relative z-10">
                 <div className="bg-black/40 p-4">
-                  <div className="text-2xl font-bold text-blue-400">
+                  <div className="text-2xl font-bold text-brand-primary">
                     <AnimatedCounter prefix="₹" to={0.91} decimals={2} /> 
                     <span className="text-xl text-gray-500 mx-2">-</span> 
                     <AnimatedCounter prefix="₹" to={1.09} decimals={2} />
@@ -178,15 +193,15 @@ export default function App() {
             </div>
             
             <div className="order-1 lg:order-2 space-y-4">
-              <div className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">
+              <div className="text-[10px] text-brand-primary font-bold uppercase tracking-widest">
                 Case Study 01 • Meta Ads Data
               </div>
-              <h2 className="text-2xl font-bold">Savoir Studio</h2>
-              <p className="text-sm text-white font-medium">Goal: Drive massive website traffic without overspending.</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Savoir Studio</h2>
+              <p className="text-base text-white font-medium">Goal: Drive massive website traffic without overspending.</p>
               <p className="text-sm text-gray-400 leading-relaxed">
                 We ran highly targeted Meta (Facebook & Instagram) ad campaigns. By constantly testing different creatives and audiences, we optimized the ads to bring in real people for around ₹1 per click.
               </p>
-              <div className="p-4 mt-6 bg-black/40 border-l-2 border-blue-400">
+              <div className="p-4 mt-6 bg-black/40 border-l-2 border-brand-primary">
                 <p className="text-[12px] text-gray-300 font-medium italic">
                   "We got over 800 highly interested people to click through to the website, proving that the right ad shown to the right person dramatically lowers costs."
                 </p>
@@ -199,23 +214,23 @@ export default function App() {
         <section className="py-24 border-t border-white/5">
           <FadeIn className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-4">
-              <div className="text-[10px] text-teal-400 font-bold uppercase tracking-widest">
+              <div className="text-[10px] text-brand-teal font-bold uppercase tracking-widest">
                 Case Study 02 • Instagram & Facebook Ads
               </div>
-              <h2 className="text-2xl font-bold">Casual Clothing Brand</h2>
-              <p className="text-sm text-white font-medium">Goal: Make the brand go viral and build a huge audience.</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Casual Clothing Brand</h2>
+              <p className="text-base text-white font-medium">Goal: Make the brand go viral and build a huge audience.</p>
               <p className="text-sm text-gray-400 leading-relaxed">
                 We designed ads specifically built to get likes, shares, and clicks. Our targeting was so accurate that nearly 7 out of every 100 people who saw the ad clicked on it—a massive success rate.
               </p>
-              <div className="p-4 mt-6 bg-black/40 border-l-2 border-teal-400">
+              <div className="p-4 mt-6 bg-black/40 border-l-2 border-brand-teal">
                 <p className="text-[12px] text-gray-300 font-medium italic">
                   "We reached over 42,000 potential buyers and generated thousands of clicks, putting the brand's products directly in front of people ready to engage."
                 </p>
               </div>
             </div>
 
-            <div className="p-6 bg-white/5 border border-white/10 hover:border-teal-500/50 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="p-6 bg-white/5 border border-white/10 hover:border-brand-teal/50 transition-colors group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
                 <div className="bg-black/40 p-4">
                   <div className="text-2xl font-bold text-white">
@@ -224,10 +239,10 @@ export default function App() {
                   <div className="text-[9px] text-gray-500 uppercase tracking-widest mt-1">Clicks generated</div>
                 </div>
                 <div className="bg-black/40 p-4">
-                  <div className="text-2xl font-bold text-teal-400">
+                  <div className="text-2xl font-bold text-brand-teal">
                     <AnimatedCounter to={6.68} decimals={2} suffix="%" />
                   </div>
-                  <div className="text-[9px] text-gray-500 uppercase tracking-widest mt-1">CTR</div>
+                  <div className="text-[9px] text-gray-500 uppercase tracking-widest mt-1">Click Rate</div>
                 </div>
                 <div className="md:col-span-2 bg-black/40 p-4">
                   <div className="text-2xl font-bold text-white">
@@ -241,11 +256,11 @@ export default function App() {
         </section>
 
         {/* SECTION 5: PERFORMANCE CONTENT SYSTEM */}
-        <section className="py-24 border-t border-white/5">
+        <section id="boosting" className="py-24 border-t border-white/5">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Content-Led Performance System</h2>
+            <h2 className="text-3xl font-bold mb-4">Video Boosting That Works</h2>
             <p className="text-sm text-gray-400">
-              Strategic content boosting designed to drive engagement, traffic, and brand growth.
+              We take your best videos and show them to thousands of potential customers to grow your business.
             </p>
           </FadeIn>
 
@@ -257,7 +272,7 @@ export default function App() {
               visitsLabel="Website Visits"
               cost={1.98} 
               clicks={819}
-              impact="Efficient traffic generation through content-driven campaigns." 
+              impact="We brought hundreds of interested visitors to the website easily and cheaply." 
               delay={0.1}
             />
             <VideoCard 
@@ -267,7 +282,7 @@ export default function App() {
               visitsLabel="Profile Visits"
               engagements={795} 
               saves={60} 
-              impact="Strong engagement and brand discovery through high-value content." 
+              impact="Lots of people liked and saved the content, discovering the brand for the first time." 
               delay={0.2}
             />
             <VideoCard 
@@ -277,7 +292,7 @@ export default function App() {
               visitsLabel="Profile Visits"
               engagements={1432} 
               clicks={99} 
-              impact="Balanced performance across awareness, engagement, and action." 
+              impact="A perfect balance of getting attention, likes, and people taking action." 
               delay={0.3}
             />
             <VideoCard 
@@ -288,14 +303,14 @@ export default function App() {
               engagements={2949} 
               clicks={128} 
               follows={7}
-              impact="High engagement and strong audience interaction with localized targeting." 
+              impact="Massive interaction from a local audience, bringing in new followers and customers." 
               delay={0.4}
             />
           </div>
         </section>
 
         {/* SECTION 6: THE SYSTEM */}
-        <section className="py-24 border-t border-white/5 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black">
+        <section id="process" className="py-24 border-t border-white/5 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-red/10 via-black to-black">
           <FadeIn className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Our Simple 3-Step Process</h2>
             <p className="text-gray-400 text-sm">How we turn your ad budget into real business growth.</p>
@@ -304,25 +319,25 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             <FadeIn delay={0.1} className="text-center space-y-4 relative">
               <div className="w-16 h-16 mx-auto bg-black border border-white/10 flex items-center justify-center relative z-10">
-                <Target className="w-6 h-6 text-blue-400" />
+                <Target className="w-6 h-6 text-brand-primary" />
               </div>
-              <div className="absolute top-8 left-[60%] w-full h-[1px] bg-gradient-to-r from-blue-500/50 to-transparent hidden md:block" />
+              <div className="absolute top-8 left-[60%] w-full h-[1px] bg-gradient-to-r from-brand-primary/50 to-transparent hidden md:block" />
               <h3 className="text-lg font-bold">1. Precision Targeting</h3>
               <p className="text-sm text-gray-400 px-4">We find exactly who is most likely to buy your product using Meta's powerful data. No wasted money showing ads to the wrong people.</p>
             </FadeIn>
 
             <FadeIn delay={0.2} className="text-center space-y-4 relative">
               <div className="w-16 h-16 mx-auto bg-black border border-white/10 flex items-center justify-center relative z-10">
-                <Clapperboard className="w-6 h-6 text-teal-400" />
+                <Clapperboard className="w-6 h-6 text-brand-teal" />
               </div>
-              <div className="absolute top-8 left-[60%] w-full h-[1px] bg-gradient-to-r from-teal-500/50 to-transparent hidden md:block" />
+              <div className="absolute top-8 left-[60%] w-full h-[1px] bg-gradient-to-r from-brand-teal/50 to-transparent hidden md:block" />
               <h3 className="text-lg font-bold">2. Winning Content</h3>
               <p className="text-sm text-gray-400 px-4">We help put together videos and images that stop the scroll. We test different versions to see what your audience clicks on the most.</p>
             </FadeIn>
 
             <FadeIn delay={0.3} className="text-center space-y-4 relative">
               <div className="w-16 h-16 mx-auto bg-black border border-white/10 flex items-center justify-center relative z-10">
-                <Rocket className="w-6 h-6 text-emerald-400" />
+                <Rocket className="w-6 h-6 text-brand-primary" />
               </div>
               <h3 className="text-lg font-bold">3. Scale & Boost</h3>
               <p className="text-sm text-gray-400 px-4">Once we find an ad that works really well, we safely increase the budget (boost it) to get you even more customers without the costs spiraling out of control.</p>
@@ -333,7 +348,7 @@ export default function App() {
         {/* SECTION 7: RESULTS SUMMARY */}
         <section className="py-24 border-t border-white/5 bg-black">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Performance Highlights</h2>
+            <h2 className="text-3xl font-bold mb-4">Our Track Record</h2>
           </FadeIn>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
@@ -341,35 +356,113 @@ export default function App() {
               <div className="text-3xl font-bold bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
                 <AnimatedCounter to={5000} suffix="+" />
               </div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Clicks Generated</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Total Clicks</p>
             </FadeIn>
             
             <FadeIn delay={0.2} className="space-y-4">
-              <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+              <div className="text-3xl font-bold bg-gradient-to-r from-brand-primary to-brand-primary bg-clip-text text-transparent">
                 <AnimatedCounter to={90000} suffix="+" />
               </div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Combined Reach</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">People Reached</p>
             </FadeIn>
 
             <FadeIn delay={0.3} className="space-y-4">
               <div className="text-3xl font-bold bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
                 ₹1
               </div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Level CPC Achieved</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Lowest Cost Per Click</p>
             </FadeIn>
 
             <FadeIn delay={0.4} className="space-y-4">
               <div className="text-3xl font-bold bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent flex items-center justify-center">
                 <LayersIcon className="w-8 h-8 text-gray-400" />
               </div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Multi-Layer System</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Proven Process</p>
             </FadeIn>
           </div>
         </section>
 
-        {/* SECTION 8: FINAL CTA */}
+        {/* SECTION 8: PROVEN ADS (Instagram Links) */}
+        <section id="proven-ads" className="py-24 border-t border-white/5">
+          <FadeIn className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">Proven Ads That Deliver</h2>
+            <p className="text-gray-400 text-sm max-w-2xl mx-auto">
+              These are actual working ads that we have created and managed for our clients, reliably turning views into real returns.
+            </p>
+          </FadeIn>
+
+          <div className="space-y-16">
+            {/* Group 1: BNI */}
+            <FadeIn delay={0.1}>
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center border border-brand-primary/50">
+                  <Instagram className="w-5 h-5 text-brand-primary" />
+                </div>
+                <h3 className="text-xl font-bold">BNI</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  "https://www.instagram.com/reel/DW1Nmz1jvTV/?hl=en",
+                  "https://www.instagram.com/reel/DW0XwczjZYr/?hl=en",
+                  "https://www.instagram.com/reel/DW0XN86jUbA/?hl=en",
+                  "https://www.instagram.com/reel/DW0VWcICV0R/?hl=en",
+                  "https://www.instagram.com/reel/DW0UvHPgKzq/?hl=en",
+                  "https://www.instagram.com/reel/DW0UEvDCNIj/?hl=en"
+                ].map((link, i) => (
+                  <InstagramEmbedCard key={i} url={link} label={`Ad Video ${i + 1}`} />
+                ))}
+              </div>
+            </FadeIn>
+
+            {/* Group 2: Savoir Studio */}
+            <FadeIn delay={0.2}>
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-brand-teal/20 flex items-center justify-center border border-brand-teal/50">
+                  <Instagram className="w-5 h-5 text-brand-teal" />
+                </div>
+                <h3 className="text-xl font-bold">Savoir Studio</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  "https://www.instagram.com/reel/DWjJ6sPCGND/?hl=en",
+                  "https://www.instagram.com/reel/DVs9fzIk2YP/?hl=en",
+                  "https://www.instagram.com/reel/DUGG14YiFlL/?hl=en",
+                  "https://www.instagram.com/reel/DT2o0x2k7Kh/?hl=en",
+                  "https://www.instagram.com/reel/DTuq0J6iIV5/?hl=en",
+                  "https://www.instagram.com/reel/DWoR5cluKYw/?hl=en"
+                ].map((link, i) => (
+                  <InstagramEmbedCard key={i} url={link} label={`Ad Video ${i + 1}`} color="brand-teal" />
+                ))}
+              </div>
+            </FadeIn>
+
+            {/* Group 3: Luxe Brow Clinic */}
+            <FadeIn delay={0.3}>
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-brand-red/20 flex items-center justify-center border border-brand-red/50">
+                  <Instagram className="w-5 h-5 text-brand-red" />
+                </div>
+                <h3 className="text-xl font-bold">Luxe Brow Clinic</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  "https://www.instagram.com/p/DO05ib3k4wq/?hl=en",
+                  "https://www.instagram.com/p/DPNzdsXj8aH/?hl=en",
+                  "https://www.instagram.com/p/DP-c1_HCDJv/?hl=en",
+                  "https://www.instagram.com/p/DPERB_ViOwc/?hl=en",
+                  "https://www.instagram.com/p/DSsG950EwCF/?hl=en",
+                  "https://www.instagram.com/p/DRWQ-ljCJ-A/?hl=en"
+                ].map((link, i) => (
+                  <InstagramEmbedCard key={i} url={link} label={`Ad Post ${i + 1}`} color="brand-red" />
+                ))}
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* SECTION 9: FINAL CTA */}
         <section className="py-24 text-center border-t border-white/5 relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-full bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-full bg-brand-primary/10 blur-[100px] rounded-full pointer-events-none" />
           
           <FadeIn className="relative z-10">
             <h2 className="text-3xl font-bold mb-6">Ready to Scale Your Brand Like This?</h2>
@@ -386,8 +479,22 @@ export default function App() {
             </div>
           </FadeIn>
         </section>
-
       </div>
+
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 p-3 bg-brand-primary text-black rounded-full shadow-lg hover:opacity-90 transition-opacity"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="w-6 h-6" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -401,9 +508,9 @@ function VideoCard({
   engagements?: number, saves?: number, follows?: number, impact: string, delay: number 
 }) {
   return (
-    <FadeIn delay={delay} className="bg-white/5 border border-white/10 p-5 hover:border-blue-500/50 transition-colors flex flex-col">
+    <FadeIn delay={delay} className="bg-white/5 border border-white/10 p-5 hover:border-brand-primary/50 transition-colors flex flex-col">
       <div className="flex justify-between items-center mb-6">
-        <div className="text-xs font-bold text-blue-400 uppercase tracking-widest">Video {index}</div>
+        <div className="text-xs font-bold text-brand-primary uppercase tracking-widest">Video {index}</div>
         <span className="text-[9px] font-mono text-zinc-500 bg-black/50 px-2 py-1">Perf_0{index}</span>
       </div>
 
@@ -462,6 +569,36 @@ function VideoCard({
         </p>
       </div>
     </FadeIn>
+  );
+}
+
+function InstagramEmbedCard({ url, label, color = "brand-primary" }: { url: string, label: string, color?: string }) {
+  const baseUrl = url.split('?')[0];
+  const embedUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'embed';
+
+  return (
+    <div className={`flex flex-col overflow-hidden bg-white/5 border border-white/10 hover:border-${color}/50 transition-all rounded`}>
+      <div className="flex items-center justify-between p-3 border-b border-white/5 bg-black/40">
+        <div className="flex items-center space-x-2">
+          <Instagram className={`w-4 h-4 text-${color}`} />
+          <span className="text-xs font-semibold text-gray-300">{label}</span>
+        </div>
+        <a href={url} target="_blank" rel="noopener noreferrer" aria-label="View on Instagram" className="group">
+          <ArrowRight className={`w-4 h-4 text-gray-500 group-hover:text-${color} transition-colors`} />
+        </a>
+      </div>
+      <div className="w-full bg-black flex justify-center items-center" style={{ minHeight: '480px' }}>
+        <iframe 
+          src={embedUrl}
+          className="w-full"
+          style={{ height: '480px', border: 'none', overflow: 'hidden' }}
+          frameBorder="0"
+          scrolling="no"
+          allowTransparency={true}
+          allow="encrypted-media"
+        />
+      </div>
+    </div>
   );
 }
 
